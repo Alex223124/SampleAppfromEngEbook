@@ -62,6 +62,15 @@ class UserTest < ActiveSupport::TestCase
     @user.password = @user.password_confirmation = "a" * 5
     assert_not @user.valid?
   end
+  
+  # Returns true if the given token matches the digest.
+  def authenticated?(remember_token)
+    return false if remember_digest.nil?
+    BCrypt::Password.new(remember_digest).is_password?(remember_token)
+  end
+
+
+
 end
 
 
