@@ -58,19 +58,16 @@ class UserTest < ActiveSupport::TestCase
     assert_not duplicate_user.valid?
   end
   
-   test "password should have a minimum length" do
+  test "password should have a minimum length" do
     @user.password = @user.password_confirmation = "a" * 5
     assert_not @user.valid?
   end
   
-  # Returns true if the given token matches the digest.
-  def authenticated?(remember_token)
-    return false if remember_digest.nil?
-    BCrypt::Password.new(remember_digest).is_password?(remember_token)
+
+
+  test "authenticated? should return false for a user with nil digest" do
+      assert_not @user.authenticated?(:remember, '')
   end
-
-
-
 end
 
 
